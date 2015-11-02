@@ -27,6 +27,7 @@ j>=2, i>=2  UP-LEFT    j-2,i-2
 
 import numpy as np
 from copy import deepcopy
+import sys
 
 
 class Board(object):
@@ -96,10 +97,9 @@ if __name__ == '__main__':
     L.append(llist)
 
     print '--- LEVEL 2 --'
-    av_moves = moves(L[1][0].curpos)
-    llist = []
-    for mov in av_moves:
-        tmp = deepcopy(L[1][0])
-        if tmp.do_move(mov):
-            llist.append(tmp)
-    L.append(llist)
+    found = False
+    level = 2
+    while not found:
+        for c_board in L[level - 1]:
+            av_moves = moves(c_board.curpos)
+
