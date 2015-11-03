@@ -124,7 +124,6 @@ if __name__ == '__main__':
     s = Stack()  # stack for boards
     s.push(b0)
     m = Stack()  # stack for moves
-    print m
 
     while not s.is_empty():
         if s.peek().counter == 25:
