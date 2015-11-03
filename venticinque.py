@@ -29,14 +29,47 @@ import numpy as np
 from copy import deepcopy
 import sys
 
+# class Node(object):
+#
+#     def __init__(self, data):
+#         """
+#
+#         :rtype : a node of a tree
+#         """
+#         self.data = data
+#         self.children = []
+#
+#     def add_child(self, obj):
+#         self.children.append(obj)
+
+
+class Stack(object):
+
+    def __init__(self):
+        self.items = []
+
+    def is_empty(self):
+        return self.items == []
+
+    def push(self, item):
+        self.items.append(item)
+
+    def pop(self):
+        return self.items.pop()
+
+    def peek(self):
+        return self.items[len(self.items)-1]
+
+    def size(self):
+        return len(self.items)
+
 
 class Board(object):
 
-    def __init__(self):
-        self.board = np.zeros((5, 5))
-        self.curpos = [0, 0]
-        self.counter = 1
-        self.board[0][0] = 1
+    def __init__(self, board, curpos, counter):
+        self.board = board
+        self.curpos = curpos
+        self.counter = counter
 
     def do_move(self, move):
         if self.board[move[0]][move[1]] == 0:
@@ -81,25 +114,32 @@ def moves(pos):
 
 if __name__ == '__main__':
 
-    L = []
+    # INIT
+    board = np.zeros((5, 5))
+    board[0][0] = 1
+    curpos = [0, 0]
+    counter = 1
+    b0 = Board(board, curpos, counter)
 
-    print '--- LEVEL 0 --'
-    b0 = Board()  # new empty board
-    L.append([b0])
+    s = Stack()
+    s.push(b0)
 
-    print '--- LEVEL 1 --'
-    av_moves = moves(L[0][0].curpos)  # init av. moves
-    llist = []
-    for mov in av_moves:
-        tmp = deepcopy(L[0][0])
-        if tmp.do_move(mov):
-            llist.append(tmp)
-    L.append(llist)
+    while not s.is_empty():
+        if s.peek().counter == 25:
+            print 'RISOLTO'
+            print s.peek().board
+            sys.exit()
+        else:  # not a solution
+            av_moves = moves(s.peek().curpos)  # generate possible moves from that board
+            if av_moves:  # some moves available
+                for mov in av_moves:
+                    new_board = deepcopy(s.peek())
+                    new_board.do_move(mov)
+                    s.push(new_board)
+            else:  # no moves available with this board
+                s.pop()
 
-    print '--- LEVEL 2 --'
-    found = False
-    level = 2
-    while not found:
-        for c_board in L[level - 1]:
-            av_moves = moves(c_board.curpos)
+
+
+
 
