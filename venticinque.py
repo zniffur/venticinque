@@ -124,6 +124,7 @@ if __name__ == '__main__':
     s = Stack()  # stack for boards
     s.push(b0)
     m = Stack()  # stack for moves
+    print m
 
     while not s.is_empty():
         if s.peek().counter == 25:
@@ -132,7 +133,7 @@ if __name__ == '__main__':
             sys.exit(0)
         else:  # not a solution
             av_moves = moves(s.peek().curpos)  # generate possible moves from that board
-            
+
             if av_moves:  # some moves available
                 tmp = s.peek()
                 for mov in av_moves:
