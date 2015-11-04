@@ -141,6 +141,5 @@ if __name__ == '__main__':
                     s.push(new_board)
                     print new_board.board, new_board.counter, new_board.curpos
                     m.push(mov)
-                    print 'test'
             if s.peek() == tmp:  # no valid moves from here
                 s.pop()
