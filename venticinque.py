@@ -131,14 +131,16 @@ if __name__ == '__main__':
             print s.peek().board
             sys.exit(0)
         else:  # not a solution
-            av_moves = moves(s.peek().curpos)  # generate possible moves from that board
-
-            if av_moves:  # some moves available
-                tmp = s.peek()
-                for mov in av_moves:
-                    new_board = deepcopy(tmp)
-                    if new_board.do_move(mov):  # if the move is valid
-                        s.push(new_board)
-                        print new_board.board, new_board.counter, new_board.curpos
-            else:  # no moves available with this board
+            tmp = s.peek()
+            av_moves = moves(tmp.curpos)
+            # generate possible moves from that board position
+            # (which could also be invalid)
+            for mov in av_moves:
+                new_board = deepcopy(tmp)
+                if new_board.do_move(mov):  # if the move is valid
+                    s.push(new_board)
+                    print new_board.board, new_board.counter, new_board.curpos
+                    m.push(mov)
+                    print 'test'
+            if s.peek() == tmp:  # no valid moves from here
                 s.pop()
