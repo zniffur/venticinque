@@ -70,7 +70,6 @@ class Board(object):
         self.board = board
         self.curpos = curpos
         self.counter = counter
-        self.moves = []
 
     def do_move(self, move):
         if self.board[move[0]][move[1]] == 0:
