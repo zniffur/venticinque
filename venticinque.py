@@ -70,6 +70,7 @@ class Board(object):
         self.board = board
         self.curpos = curpos
         self.counter = counter
+        self.moves = []
 
     def do_move(self, move):
         if self.board[move[0]][move[1]] == 0:
@@ -109,9 +110,6 @@ def moves(pos):
         retlist.append([j - 2, i - 2])
 
     return retlist
-
-def fname(arg):
-    pass
 
 if __name__ == '__main__':
 
