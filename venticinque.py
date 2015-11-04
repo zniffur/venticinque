@@ -80,7 +80,6 @@ class Board(object):
         else:
             return False
 
-
 def moves(pos):
     """
     return a list of legal moves in a given position (0..4,0..4)
@@ -140,6 +139,7 @@ if __name__ == '__main__':
                 if new_board.do_move(mov):  # if the move is valid
                     s.push(new_board)
                     print new_board.board, new_board.counter, new_board.curpos
+                    m.push(mov)
                     m.push(mov)
             if s.peek() == tmp:  # no valid moves from here
                 s.pop()
