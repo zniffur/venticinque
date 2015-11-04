@@ -139,6 +139,5 @@ if __name__ == '__main__':
                 if new_board.do_move(mov):  # if the move is valid
                     s.push(new_board)
                     print new_board.board, new_board.counter, new_board.curpos
-                    m.push(mov)  # test
             if s.peek() == tmp:  # no valid moves from here
                 s.pop()
