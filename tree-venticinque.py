@@ -4,7 +4,6 @@ import sys
 
 __author__ = 'simo'
 
-
 """
 j rows
 i cols
@@ -42,6 +41,24 @@ j>=2, i>=2  UP-LEFT    j-2,i-2
 #     def add_child(self, obj):
 #         self.children.append(obj)
 
+
+class Tree(object):
+
+    def __init__(self):
+        self.items = []
+        self.children = []
+
+    def add_child(self, child):
+        self.children.append(child)
+
+    def num_children(self):
+        return len(self.children)
+
+    def add_item(self, item):
+        self.items.append(item)
+
+    def get_item(self):  # get the first of the item
+        return self.items[len(self.items)-1]
 
 class Stack(object):
 
@@ -115,6 +132,34 @@ class Board(object):
         else:
             return False
 
+num_sol = 0
+
+
+def explore(node):
+
+    if node.get_item().counter == 25:
+        print 'SOL #: '
+        print node.get_item().board
+        sys.exit(0)
+        #return True
+    else:
+        # add all valid children to the node (i.e. valid moves from current pos)
+
+        tmp = node.get_item()  # read board of this node
+        tmp.list_moves()  # generate possible moves
+        while not tmp.moves.is_empty():  # loop on the moves
+            new_board = deepcopy(tmp)
+            mov = tmp.moves.pop()  # pop 1 move
+            if new_board.do_move(mov):  # if the move is valid
+                new_child = Tree()
+                new_child.add_item(new_board)
+                node.add_child(new_child)  # add new child
+
+        # recursion: explore all valid children
+        for child in node.children:
+            # print child.get_item().board
+            explore(child)
+
 if __name__ == '__main__':
 
     # INIT
@@ -124,26 +169,7 @@ if __name__ == '__main__':
     counter = 1
     b0 = Board(board, curpos, counter)
 
-    s = Stack()  # stack for boards
-    s.push(b0)
+    t = Tree()  # tree for boards
+    t.add_item(b0)  # root node
 
-    while not s.is_empty():
-        if s.peek().counter == 25:
-            print 'RISOLTO'
-            print s.peek().board
-            #sys.exit(0)
-            break
-        else:  # not a solution
-            tmp = s.peek()  # take the first board on the stack
-            tmp.list_moves()
-            # generate possible moves from that board position
-            # (which could also be invalid) and fill moves stack
-
-            while not tmp.moves.is_empty():  # try next move from that pos.
-                new_board = deepcopy(tmp)
-                mov = tmp.moves.pop()
-                if new_board.do_move(mov):  # if the move is valid
-                    s.push(new_board)
-                    print new_board.board, new_board.counter, new_board.curpos
-            if s.peek() == tmp:  # no valid moves from here
-                s.pop()
+    explore(t)
