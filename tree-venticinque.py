@@ -138,10 +138,12 @@ num_sol = 0
 def explore(node):
 
     if node.get_item().counter == 25:
-        print 'SOL #: '
+        global num_sol
+        num_sol += 1
+        print 'SOL #: ' + str(num_sol)
         print node.get_item().board
         sys.exit(0)
-        #return True
+        return True
     else:
         # add all valid children to the node (i.e. valid moves from current pos)
 
