@@ -142,7 +142,7 @@ def explore(node):
         num_sol += 1
         print 'SOL #: ' + str(num_sol)
         print node.get_item().board
-        sys.exit(0)
+        #sys.exit(0)
         return True
     else:
         # add all valid children to the node (i.e. valid moves from current pos)
@@ -175,3 +175,4 @@ if __name__ == '__main__':
     t.add_item(b0)  # root node
 
     explore(t)
+    # test
